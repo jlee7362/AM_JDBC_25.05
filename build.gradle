@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'koreaIT'
+group = 'jdbc'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -12,6 +12,10 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    //db
+    implementation group: 'com.mysql', name: 'mysql-connector-j', version: '9.2.0'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
 test {

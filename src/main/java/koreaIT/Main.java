@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class Main {
     public static void main(String[] args) {
 
@@ -33,7 +34,7 @@ public class Main {
                 System.out.printf("%d번 게시글이 등록되었습니다.\n", lastId);
             }
             else if(cmd.equals("article list")){
-                System.out.println("번호  /   제목");
+                System.out.println("번호   /   제목");
                 System.out.println("=".repeat(30));
 
                 for(int i = articleList.size()-1; i >=0; i--){
