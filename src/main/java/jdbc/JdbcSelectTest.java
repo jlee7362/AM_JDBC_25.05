@@ -1,14 +1,12 @@
 package jdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class JdbcInsertTest {
+public class JdbcSelectTest {
     public static void main(String[] args) {
         Connection conn = null;
         PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
         try {
             Class.forName("org.mariadb.jdbc.Driver");
@@ -18,18 +16,31 @@ public class JdbcInsertTest {
 
             // insert 테스트
 
-            String sql = "INSERT INTO `article` ";
-            sql += "SET `regDate` = NOW(),";
-            sql += "`updateDate` = NOW(),";
-            sql += "`title` = '제목java',";
-            sql += "`body` = '내용java'";
+            String sql = "SELECT *";
+            sql += " FROM `article` ;";
 
             System.out.println(sql);
 
             pstmt = conn.prepareStatement(sql);
 
-            int affectedRows = pstmt.executeUpdate();
-            System.out.println(affectedRows + "열에 적용됨.");
+            rs = pstmt.executeQuery();
+
+            System.out.println(rs.next());
+
+            while (rs.next()){
+                int id = rs.getInt("id");
+                String regDate = rs.getString("regDate");
+                String updateDate = rs.getString("updateDate");
+                String title = rs.getString("title");
+                String body = rs.getString("body");
+
+                System.out.printf("%d, %s, %s, %s, %s\n",id, regDate, updateDate, title, body);
+
+            }
+
+
+
+
 
 
         } catch (ClassNotFoundException e) {
