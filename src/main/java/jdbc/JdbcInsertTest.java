@@ -29,7 +29,7 @@ public class JdbcInsertTest {
             pstmt = conn.prepareStatement(sql);
 
             int affectedRows = pstmt.executeUpdate();
-            System.out.println(affectedRows + "열에 적용됨.");
+            System.out.println("affected rows : " + affectedRows);
 
 
         } catch (ClassNotFoundException e) {

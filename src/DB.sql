@@ -18,3 +18,10 @@ SET `regDate` = NOW(),
 	`body` = '내용1';
 
 	SELECT * FROM `article`;
+ORDER BY `id` DESC;
+
+UPDATE `article`
+SET `updateDate` = NOW(),
+	`title` = '제목1',
+	`body` = '내용1'
+	WHERE `id` = 1;
