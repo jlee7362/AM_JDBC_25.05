@@ -38,10 +38,10 @@ public class JdbcSelectTest {
                 String title = rs.getString("title");
                 String body = rs.getString("body");
 
-                Article article = new Article(id, regDate, updateDate, title, body);
-                articleList.add(article);
-
-                System.out.printf("%d, %s, %s, %s, %s\n", article.getId(),article.getRegDate(),article.getUpdateDate(),article.getTitle(),article.getBody());
+//                Article article = new Article(id, regDate, updateDate, title, body);
+//                articleList.add(article);
+//
+//                System.out.printf("%d, %s, %s, %s, %s\n", article.getId(),article.getRegDate(),article.getUpdateDate(),article.getTitle(),article.getBody());
             }
 
         } catch (ClassNotFoundException e) {
