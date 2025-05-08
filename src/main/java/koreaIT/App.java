@@ -64,7 +64,7 @@ public class App {
             try{
                 id = Integer.parseInt(cmd.split(" ")[2]);
             }catch(Exception e){
-                System.out.println("정수를 입력하세요");
+                System.out.println("정수를 입력하세요.\n");
             }
             //parsing 끝
 
@@ -95,7 +95,7 @@ public class App {
             try{
                 id = Integer.parseInt(cmd.split(" ")[2]);
             }catch(Exception e){
-                System.out.println("정수를 입력하세요\n");
+                System.out.println("정수를 입력하세요.\n");
             }
             //parsing 끝
 
@@ -128,7 +128,7 @@ public class App {
             try {
                 id = Integer.parseInt(cmd.split(" ")[2]);
             } catch (Exception e) {
-                System.out.println("정수 입력하세요\n");
+                System.out.println("정수 입력하세요.\n");
             }
             //parsing 끝
 
@@ -203,7 +203,7 @@ public class App {
 
 
             if (articleList.isEmpty()) {
-                System.out.println("게시글이 없습니다.");
+                System.out.println("게시글이 없습니다.\n");
                 return 0;
             }
 
