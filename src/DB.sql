@@ -25,3 +25,8 @@ SET `updateDate` = NOW(),
 	`title` = '제목1',
 	`body` = '내용1'
 	WHERE `id` = 1;
+
+SELECT *
+FROM `article`
+WHERE `id`= ?;
+             id
