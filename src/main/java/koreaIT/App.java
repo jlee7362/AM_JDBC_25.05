@@ -60,12 +60,27 @@ public class App {
 
         } else if (cmd.startsWith("article modify")) {
             int id = 0;
-            //Parsing
+
+            //parsing 시작
             try {
                 id = Integer.parseInt(cmd.split(" ")[2]);
             } catch (Exception e) {
                 System.out.println("정수 입력하세요");
             }
+            //parsing 끝
+
+            //수정할 글 유무체크 시작
+            SecSql sql = new SecSql();
+            sql.append("SELECT * ");
+            sql.append("FROM `article`");
+            sql.append("WHERE `id`= ?;",id);
+
+            Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
+            if(articleMap.isEmpty()){
+                System.out.printf("%d번 글은 없습니다.\n", id);
+                return 0;
+            }
+            //수정할 글 유무체크 끝
 
             System.out.println("==글 수정==");
             System.out.print("새 제목: ");
@@ -73,35 +88,22 @@ public class App {
             System.out.print("새 내용: ");
             String newBody = sc.nextLine().trim();
 
-            PreparedStatement pstmt = null;
+            //DB 업데이트
 
-            try {
-                String sql = "UPDATE `article` ";
-                sql += "SET `updateDate` = NOW(),";
-                if (newTitle.length() > 0) {
-                    sql += "`title` = '" + newTitle + "',";
-                }
-                if (newBody.length() > 0) {
-                    sql += "`body` = '" + newBody + "'";
-                }
-                sql += "WHERE `id` = " + id + ";";
-
-                System.out.println(sql);
-
-                pstmt = conn.prepareStatement(sql);
-
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println("에러2 update");
-            } finally {
-                try {
-                    if (pstmt != null && !pstmt.isClosed()) {
-                        pstmt.close();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            sql = new SecSql();
+            sql.append("UPDATE `article`");
+            sql.append("SET `updateDate` = NOW()");
+            if(newTitle.length()>0){
+                sql.append(",`title` = ?",newTitle);
             }
+            if(newBody.length()>0){
+                sql.append(",`body` = ?",newBody);
+            }
+            sql.append("WHERE `id` = ?;",id);
+
+            DBUtil.update(conn, sql);
+            System.out.printf("%d번 게시글이 업데이트 되었습니다.\n", id);
+
         } else if (cmd.equals("article write")) {
             System.out.print("제목 : ");
             String title = sc.nextLine().trim();
@@ -136,51 +138,6 @@ public class App {
                 articleList.add(article);
             }
 
-            //DB select
-//            PreparedStatement pstmt = null;
-//            ResultSet rs = null;
-//
-//            try {
-//                String sql = "SELECT * FROM `article`";
-//                sql += "ORDER BY `id` DESC ;";
-//
-//                System.out.println(sql);
-//
-//                pstmt = conn.prepareStatement(sql);
-//
-//                rs = pstmt.executeQuery();
-//
-//                while (rs.next()) {
-//                    int id = rs.getInt("id");
-//                    String regDate = rs.getString("regDate");
-//                    String updateDate = rs.getString("updateDate");
-//                    String title = rs.getString("title");
-//                    String body = rs.getString("body");
-//
-//                    Article article = new Article(id, regDate, updateDate, title, body);
-//
-//                    articleList.add(article);
-//
-//                }
-//
-//            } catch (SQLException e) {
-//                System.out.println("에러3 select");
-//            } finally {
-//                try {
-//                    if (pstmt != null && !pstmt.isClosed()) {
-//                        pstmt.close();
-//                    }
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//                try {
-//                    if (rs != null && !rs.isClosed()) {
-//                        rs.close();
-//                    }
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
 
             if (articleList.isEmpty()) {
                 System.out.println("게시글이 없습니다.");
