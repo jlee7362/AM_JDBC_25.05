@@ -5,13 +5,16 @@ import koreaIT.controller.MemberController;
 import util.DBUtil;
 import util.SecSql;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 public class App {
+
 
     public void run() {
 
@@ -57,26 +60,22 @@ public class App {
 
 
     private int doAction(Connection conn, Scanner sc, String cmd) {
-
         MemberController memberController = new MemberController(conn, sc);
-        ArticleController articleController = new ArticleController(conn, sc);
+        ArticleController articleController = new ArticleController(conn);
 
         if (cmd.equals("exit")) {
             return -1;
-            
-
-        }else if(cmd.equals("member join")){
+        } else if (cmd.equals("member join")) {
             memberController.doJoin();
-        }else if(cmd.startsWith("article delete")){
+        } else if (cmd.startsWith("article delete")) {
             articleController.doDelete(cmd);
 
-
-        }else if(cmd.startsWith("article detail")){
+        } else if (cmd.startsWith("article detail")) {
             int id = 0;
             //parsing 시작
-            try{
+            try {
                 id = Integer.parseInt(cmd.split(" ")[2]);
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("정수를 입력하세요.\n");
             }
             //parsing 끝
@@ -85,11 +84,11 @@ public class App {
             SecSql sql = new SecSql();
             sql.append("SELECT *");
             sql.append("FROM `article`");
-            sql.append("WHERE `id` = ?;",id);
+            sql.append("WHERE `id` = ?;", id);
 
             Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
-            if(articleMap.isEmpty()){
-                System.out.printf("%d번 글은 없습니다.\n",id);
+            if (articleMap.isEmpty()) {
+                System.out.printf("%d번 글은 없습니다.\n", id);
                 return 0;
             }
             //글 유무체크 끝
@@ -103,7 +102,7 @@ public class App {
             System.out.println("제목 : " + article.getTitle());
             System.out.println("내용 : " + article.getBody());
 
-        }else if (cmd.startsWith("article modify")) {
+        } else if (cmd.startsWith("article modify")) {
             int id = 0;
 
             //parsing 시작
@@ -118,10 +117,10 @@ public class App {
             SecSql sql = new SecSql();
             sql.append("SELECT * ");
             sql.append("FROM `article`");
-            sql.append("WHERE `id`= ?;",id);
+            sql.append("WHERE `id`= ?;", id);
 
             Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
-            if(articleMap.isEmpty()){
+            if (articleMap.isEmpty()) {
                 System.out.printf("%d번 글은 없습니다.\n", id);
                 return 0;
             }
@@ -138,13 +137,13 @@ public class App {
             sql = new SecSql();
             sql.append("UPDATE `article`");
             sql.append("SET `updateDate` = NOW()");
-            if(newTitle.length()>0){
-                sql.append(",`title` = ?",newTitle);
+            if (newTitle.length() > 0) {
+                sql.append(",`title` = ?", newTitle);
             }
-            if(newBody.length()>0){
-                sql.append(",`body` = ?",newBody);
+            if (newBody.length() > 0) {
+                sql.append(",`body` = ?", newBody);
             }
-            sql.append("WHERE `id` = ?;",id);
+            sql.append("WHERE `id` = ?;", id);
 
             DBUtil.update(conn, sql);
             System.out.printf("%d번 게시글이 업데이트 되었습니다.\n", id);
@@ -178,7 +177,7 @@ public class App {
 
             List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
 
-            for( Map<String, Object> articleMap : articleListMap){
+            for (Map<String, Object> articleMap : articleListMap) {
                 Article article = new Article(articleMap);
                 articleList.add(article);
             }

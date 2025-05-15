@@ -1,6 +1,5 @@
 package koreaIT.controller;
 
-import koreaIT.Member;
 import koreaIT.service.MemberService;
 import util.DBUtil;
 import util.SecSql;
@@ -9,9 +8,7 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 public class MemberController {
-
     private MemberService memberService = new MemberService();
-
     private Connection conn = null;
     private Scanner sc = null;
 
@@ -33,6 +30,7 @@ public class MemberController {
                 System.out.println("아이디 똑바로 입력하시오.");
                 continue;
             }
+
             boolean isLoginJoin = memberService.isLoginJoin(conn, loginId);
 
             if (isLoginJoin){

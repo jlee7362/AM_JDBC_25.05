@@ -1,13 +1,11 @@
 package koreaIT.service;
 
 import koreaIT.dao.ArticleDao;
-import util.SecSql;
 
 import java.sql.Connection;
 import java.util.Map;
 
 public class ArticleService {
-
     private Connection conn = null;
     private ArticleDao articleDao = null;
 
@@ -17,8 +15,11 @@ public class ArticleService {
     }
 
     public Map<String, Object> getArticleById(int id) {
-       return articleDao.getArticleById(id);
+
+        return articleDao.getArticleById(id);
+
     }
+
     public void doDelete(int id) {
         articleDao.doDelete(id);
     }
