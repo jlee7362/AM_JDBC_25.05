@@ -30,3 +30,41 @@ SELECT *
 FROM `article`
 WHERE `id`= ?;
              id
+
+# Member command
+USE `am_jdbc_2025_05`;
+
+SHOW TABLES;
+DESC `member`;
+
+SELECT * FROM `member`;
+SELECT * FROM `article`;
+
+SELECT*#, count(*) > 0
+FROM `member`
+WHERE `loginId` = 'test2';
+
+
+
+CREATE TABLE `member`(
+	`id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	`regDate` DATETIME NOT NULL,
+	`updateDate` DATETIME NOT NULL,
+	`loginId` CHAR(30) NOT NULL,
+	`loginPw` CHAR(100) NOT NULL,
+	`name` CHAR(100) NOT NULL
+);
+INSERT INTO `member`
+SET	`regDate` = NOW(),
+	`updateDate` =NOW(),
+	`loginId` ='test1',
+	`loginPw` ='test1',
+	`name` ='홍길동';
+INSERT INTO `member`
+SET	`regDate` = NOW(),
+	`updateDate` =NOW(),
+	`loginId` ='test2',
+	`loginPw` ='test2',
+	`name` ='홍길순';
+
+SELECT * FROM `member`;

@@ -33,9 +33,7 @@ public class MemberController {
                 System.out.println("아이디 똑바로 입력하시오.");
                 continue;
             }
-
             boolean isLoginJoin = memberService.isLoginJoin(conn, loginId);
-
 
             if (isLoginJoin){
                 System.out.println(loginId + "는(은) 이미 사용중입니다.");
