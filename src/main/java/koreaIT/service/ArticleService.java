@@ -1,8 +1,10 @@
 package koreaIT.service;
 
+import koreaIT.Article;
 import koreaIT.dao.ArticleDao;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.Map;
 
 public class ArticleService {
@@ -22,5 +24,21 @@ public class ArticleService {
 
     public void doDelete(int id) {
         articleDao.doDelete(id);
+    }
+
+    public void doModify(String newTitle, String newBody, int id) {
+        articleDao.doModify(newTitle, newBody, id);
+    }
+
+    public int doWrite(String title, String body) {
+       return articleDao.doWrite(title, body);
+    }
+
+    public List<Map<String, Object>> showList() {
+        return articleDao.showList();
+    }
+
+    public List<Article> getArticleList() {
+        return articleDao.getArticleList();
     }
 }

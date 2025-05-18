@@ -1,17 +1,22 @@
 package koreaIT.dao;
 
+import koreaIT.Article;
 import util.DBUtil;
 import util.SecSql;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ArticleDao {
 
     private Connection conn = null;
+    private List<Article> articleList;
 
     public ArticleDao(Connection conn) {
         this.conn = conn;
+        this.articleList = new ArrayList<>();
     }
 
     public Map<String, Object> getArticleById(int id) {
@@ -30,4 +35,47 @@ public class ArticleDao {
 
         DBUtil.delete(conn, sql);
     }
+
+    public void doModify(String newTitle, String newBody, int id) {
+        SecSql sql = new SecSql();
+        sql.append("UPDATE `article`");
+        sql.append("SET `updateDate` = NOW()");
+        if (newTitle.length() > 0) {
+            sql.append(",`title` = ?", newTitle);
+        }
+        if (newBody.length() > 0) {
+            sql.append(",`body` = ?", newBody);
+        }
+        sql.append("WHERE `id` = ?;", id);
+
+        DBUtil.update(conn, sql);
+
+    }
+
+    public int doWrite(String title, String body) {
+        SecSql sql = new SecSql();
+
+        sql.append("INSERT INTO `article`");
+        sql.append("SET `regDate` = NOW(),");
+        sql.append("`updateDate` = NOW(),");
+        sql.append("`title` = ?,", title);
+        sql.append("`body` = ? ;", body);
+
+        return DBUtil.insert(conn, sql);
+    }
+
+    public List<Article> getArticleList() {
+        return articleList;
+    }
+    public List<Map<String, Object>> showList() {
+
+        SecSql sql = new SecSql();
+        sql.append("SELECT * FROM `article`");
+        sql.append("ORDER BY `id` DESC ;");
+
+        return DBUtil.selectRows(conn, sql);
+
+    }
+
+
 }

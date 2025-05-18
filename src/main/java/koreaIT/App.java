@@ -67,134 +67,21 @@ public class App {
             return -1;
         } else if (cmd.equals("member join")) {
             memberController.doJoin();
+
         } else if (cmd.startsWith("article delete")) {
             articleController.doDelete(cmd);
 
         } else if (cmd.startsWith("article detail")) {
-            int id = 0;
-            //parsing 시작
-            try {
-                id = Integer.parseInt(cmd.split(" ")[2]);
-            } catch (Exception e) {
-                System.out.println("정수를 입력하세요.\n");
-            }
-            //parsing 끝
-
-            //글 유무체크 시작
-            SecSql sql = new SecSql();
-            sql.append("SELECT *");
-            sql.append("FROM `article`");
-            sql.append("WHERE `id` = ?;", id);
-
-            Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
-            if (articleMap.isEmpty()) {
-                System.out.printf("%d번 글은 없습니다.\n", id);
-                return 0;
-            }
-            //글 유무체크 끝
-            System.out.println("==상세보기==");
-
-            Article article = new Article(articleMap);
-
-            System.out.println("번호 : " + article.getId());
-            System.out.println("등록날짜 : " + article.getRegDate());
-            System.out.println("수정날짜 : " + article.getUpdateDate());
-            System.out.println("제목 : " + article.getTitle());
-            System.out.println("내용 : " + article.getBody());
+            articleController.showDetail(cmd);
 
         } else if (cmd.startsWith("article modify")) {
-            int id = 0;
-
-            //parsing 시작
-            try {
-                id = Integer.parseInt(cmd.split(" ")[2]);
-            } catch (Exception e) {
-                System.out.println("정수 입력하세요.\n");
-            }
-            //parsing 끝
-
-            //수정할 글 유무체크 시작
-            SecSql sql = new SecSql();
-            sql.append("SELECT * ");
-            sql.append("FROM `article`");
-            sql.append("WHERE `id`= ?;", id);
-
-            Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
-            if (articleMap.isEmpty()) {
-                System.out.printf("%d번 글은 없습니다.\n", id);
-                return 0;
-            }
-            //수정할 글 유무체크 끝
-
-            System.out.println("==글 수정==");
-            System.out.print("새 제목: ");
-            String newTitle = sc.nextLine().trim();
-            System.out.print("새 내용: ");
-            String newBody = sc.nextLine().trim();
-
-            //DB 업데이트
-
-            sql = new SecSql();
-            sql.append("UPDATE `article`");
-            sql.append("SET `updateDate` = NOW()");
-            if (newTitle.length() > 0) {
-                sql.append(",`title` = ?", newTitle);
-            }
-            if (newBody.length() > 0) {
-                sql.append(",`body` = ?", newBody);
-            }
-            sql.append("WHERE `id` = ?;", id);
-
-            DBUtil.update(conn, sql);
-            System.out.printf("%d번 게시글이 업데이트 되었습니다.\n", id);
+            articleController.doModify(cmd, sc);
 
         } else if (cmd.equals("article write")) {
-            System.out.print("제목 : ");
-            String title = sc.nextLine().trim();
-            System.out.print("내용 : ");
-            String body = sc.nextLine().trim();
-
-            //DB insert 시작
-            SecSql sql = new SecSql();
-
-            sql.append("INSERT INTO `article`");
-            sql.append("SET `regDate` = NOW(),");
-            sql.append("`updateDate` = NOW(),");
-            sql.append("`title` = ?,", title);
-            sql.append("`body` = ? ;", body);
-
-            int id = DBUtil.insert(conn, sql);
-            //DB insert 끝
-            System.out.printf("%d번 게시글이 등록되었습니다.\n", id);
+            articleController.doWrite(sc);
 
         } else if (cmd.equals("article list")) {
-
-            List<Article> articleList = new ArrayList<>();
-
-            SecSql sql = new SecSql();
-            sql.append("SELECT * FROM `article`");
-            sql.append("ORDER BY `id` DESC ;");
-
-            List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
-
-            for (Map<String, Object> articleMap : articleListMap) {
-                Article article = new Article(articleMap);
-                articleList.add(article);
-            }
-
-
-            if (articleList.isEmpty()) {
-                System.out.println("게시글이 없습니다.\n");
-                return 0;
-            }
-
-            System.out.println("번호   /   제목");
-            System.out.println("=".repeat(30));
-
-            for (Article article : articleList) {
-                System.out.printf("%d         %s\n", article.getId(), article.getTitle());
-            }
-
+            articleController.showList();
         }
         return 0;
     }
