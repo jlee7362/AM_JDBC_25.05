@@ -6,9 +6,13 @@ import util.SecSql;
 import java.sql.Connection;
 
 public class MemberDao {
+    private  Connection conn;
 
+    public MemberDao(Connection conn) {
+        this.conn = conn;
+    }
 
-    public boolean isLoginJoin(Connection conn, String loginId) {
+    public boolean isLoginJoinable(String loginId) {
         // DB안에 있는 아이디 중복체크
         SecSql sql = new SecSql();
 
@@ -20,5 +24,18 @@ public class MemberDao {
 
     }
 
+    public int doJoin(String loginId, String loginPw, String name) {
+        // DB insert
+        SecSql sql = new SecSql();
 
+        sql.append("INSERT INTO `member`");
+        sql.append("SET `regDate` = NOW(),");
+        sql.append("`updateDate` = NOW(),");
+        sql.append("`loginId` = ?,", loginId);
+        sql.append("`loginPw` = ?,", loginPw);
+        sql.append("`name` = ?;", name);
+
+        return DBUtil.insert(conn, sql);
+
+    }
 }

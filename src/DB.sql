@@ -68,3 +68,13 @@ SET	`regDate` = NOW(),
 	`name` ='홍길순';
 
 SELECT * FROM `member`;
+
+
+# TD( test data 만들기: 2배수)
+INSERT INTO `member` (`regDate`, `loginId`, `loginPw`, `name`)
+SELECT NOW(), UUID(), 'testPw', '아무개'
+FROM `member`;
+
+# 유니크 인덱스를 loginID 칼럼에 걸기(대량의 정보속에 색인을 넣어서 빠르게 찾는 기능 추가)
+ALTER TABLE `member` ADD UNIQUE INDEX (`loginId`);
+DESCRIBE `member`;
