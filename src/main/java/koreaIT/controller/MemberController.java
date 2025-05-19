@@ -33,34 +33,34 @@ public class MemberController {
 
             boolean isLoginJoin = memberService.isLoginJoinable(loginId);
 
-            if (isLoginJoin){
+            if (isLoginJoin) {
                 System.out.println(loginId + "는(은) 이미 사용중입니다.");
                 continue;
             }
             break;
 
         }
-        while(true) {
+        while (true) {
             System.out.print("새 비밀번호 : ");
             loginPw = sc.nextLine();
 
-            if(loginPw.length() == 0 || loginPw.contains(" ")){
+            if (loginPw.length() == 0 || loginPw.contains(" ")) {
                 System.out.println("비밀번호 똑바로 입력하시오.");
                 continue;
             }
             System.out.print("비밀번호 확인 : ");
             String loginPwCheck = sc.nextLine();
-            if(loginPw.equals(loginPwCheck) == false){
+            if (loginPw.equals(loginPwCheck) == false) {
                 System.out.println("비밀번호가 일치하지 않습니다.");
                 continue;
             }
             break;
         }
 
-        while(true) {
+        while (true) {
             System.out.print("새 이름 : ");
             name = sc.nextLine().trim();
-            if(name.length()==0 || name.contains(" ")){
+            if (name.length() == 0 || name.contains(" ")) {
                 System.out.println("이름 똑바로 입력하시오.");
                 continue;
             }
@@ -89,7 +89,7 @@ public class MemberController {
 
             boolean isJoined = memberService.isLoginJoinable(loginId);
 
-            if (!isJoined){
+            if (!isJoined) {
                 System.out.println(loginId + "는(은) 없습니다.");
                 continue;
             }
@@ -100,26 +100,35 @@ public class MemberController {
         Member member = memberService.getMemberByLoginId(loginId);
 
 
-            while(true) {
-                for(int i=1; i<6; i++) {
-                    System.out.print("로그인 비밀번호 : ");
-                    loginPw = sc.nextLine();
+        int toggle = 0;
 
-                    if (loginPw.length() == 0 || loginPw.contains(" ")) {
-                        System.out.printf("비밀번호 똑바로 입력하시오. (%d/5번)", i);
-
-                        continue;
-                    }
-                    if (loginPw.equals(member.getLoginPw()) == false) {
-                        System.out.printf("비밀번호가 일치하지 않습니다. (%d/5번)", i);
-                        continue;
-                    }
-                }break;
+        for (int i = 1; i < 6; i++) {
+            System.out.print("로그인 비밀번호 : ");
+            loginPw = sc.nextLine();
+            if (loginPw.length() == 0 || loginPw.contains(" ")) {
+                System.out.printf("비밀번호 똑바로 입력하시오. (%d/5번)\n", i);
+                continue;
+            }
+            if (!loginPw.equals(member.getLoginPw())) {
+                System.out.printf("비밀번호가 일치하지 않습니다. (%d/5번)\n", i);
+                continue;
             }
 
+            toggle = 1;
+            break;
+        }
+
+            if(toggle == 1){
+                System.out.println(member.getName() + "님 환영합니다.");
+            }
+            else {
+                System.out.println("비밀번호 5회 틀렸습니다. 다시 시도하세요.");
+            }
+        }
 
 
-        System.out.println(member.getName() + "님 환영합니다.");
+
+
 
 
 //        아이디를 제대로 입력해주세요
@@ -129,6 +138,5 @@ public class MemberController {
 //        00님 환영합니다.
 
 
-
     }
-}
+
