@@ -77,6 +77,8 @@ public class App {
 
         } else if (cmd.equals("article list")) {
             articleController.showList();
+        } else {
+            System.out.println("사용할 수 없는 명령어입니다.");
         }
         return 0;
     }
