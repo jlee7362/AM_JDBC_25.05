@@ -61,7 +61,7 @@ public class App {
         if (cmd.equals("exit")) {
             return -1;
         } else if (cmd.equals("member login")){
-            memberController.doLogin(sc);
+            memberController.doLogin();
 
         } else if (cmd.equals("member join")) {
             memberController.doJoin();
