@@ -28,6 +28,18 @@ public class ArticleDao {
         return DBUtil.selectRow(conn, sql);
     }
 
+    public List<Map<String, Object>> getArticle() {
+
+        SecSql sql = new SecSql();
+        sql.append("SELECT * FROM `article`");
+        sql.append("ORDER BY `id` DESC ;");
+
+        List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
+
+        return articleListMap;
+
+    }
+
     public void doDelete(int id) {
         SecSql sql = new SecSql();
         sql.append("DELETE FROM `article`");
@@ -66,15 +78,6 @@ public class ArticleDao {
 
     public List<Article> getArticleList() {
         return articleList;
-    }
-    public List<Map<String, Object>> showList() {
-
-        SecSql sql = new SecSql();
-        sql.append("SELECT * FROM `article`");
-        sql.append("ORDER BY `id` DESC ;");
-
-        return DBUtil.selectRows(conn, sql);
-
     }
 
 

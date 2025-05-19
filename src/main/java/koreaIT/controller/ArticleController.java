@@ -2,22 +2,16 @@ package koreaIT.controller;
 
 import koreaIT.Article;
 import koreaIT.service.ArticleService;
-import util.DBUtil;
-import util.SecSql;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 public class ArticleController {
     private ArticleService articleService;
-    private Connection conn;
-
 
     public ArticleController(Connection conn) {
-        this.conn = conn;
         this.articleService = new ArticleService(conn);
     }
 
@@ -123,15 +117,10 @@ public class ArticleController {
     }
 
     public void showList() {
-        List<Article> articleList = articleService.getArticleList();
-        List<Map<String, Object>> articleListMap = articleService.showList();
 
-        for (Map<String, Object> articleMap : articleListMap) {
-            Article article = new Article(articleMap);
-            articleList.add(article);
-        }
+        List<Article> articleList = articleService.getArticles();
 
-        if (articleListMap.isEmpty()) {
+        if (articleList.isEmpty()) {
             System.out.println("게시글이 없습니다.\n");
             return;
         }

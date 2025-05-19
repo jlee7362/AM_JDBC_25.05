@@ -2,15 +2,10 @@ package koreaIT;
 
 import koreaIT.controller.ArticleController;
 import koreaIT.controller.MemberController;
-import util.DBUtil;
-import util.SecSql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class App {

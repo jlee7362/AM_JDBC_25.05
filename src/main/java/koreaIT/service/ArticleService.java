@@ -4,15 +4,15 @@ import koreaIT.Article;
 import koreaIT.dao.ArticleDao;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ArticleService {
-    private Connection conn = null;
     private ArticleDao articleDao = null;
+    private List<Article> articleList = new ArrayList<>();
 
     public ArticleService(Connection conn) {
-        this.conn = conn;
         this.articleDao = new ArticleDao(conn);
     }
 
@@ -31,14 +31,19 @@ public class ArticleService {
     }
 
     public int doWrite(String title, String body) {
-       return articleDao.doWrite(title, body);
+
+        return articleDao.doWrite(title, body);
     }
 
-    public List<Map<String, Object>> showList() {
-        return articleDao.showList();
-    }
+    public List<Article> getArticles() {
 
-    public List<Article> getArticleList() {
-        return articleDao.getArticleList();
+        List<Map<String, Object>> articleListMap = articleDao.getArticle();
+
+        for (Map<String, Object> articleMap : articleListMap) {
+            Article article = new Article(articleMap);
+            articleList.add(article);
+        }
+
+        return articleList;
     }
 }
