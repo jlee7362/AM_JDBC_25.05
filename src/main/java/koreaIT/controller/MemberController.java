@@ -3,7 +3,6 @@ package koreaIT.controller;
 import koreaIT.Member;
 import koreaIT.container.Container;
 import koreaIT.service.MemberService;
-import koreaIT.session.Session;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -18,6 +17,11 @@ public class MemberController {
     }
 
     public void doJoin() {
+
+        if (Container.session.isLogined()) {
+            System.out.println("로그아웃하고 이용하세요.");
+            return;
+        }
 
         String loginId = null;
         String loginPw = null;
@@ -74,10 +78,11 @@ public class MemberController {
 
     public void doLogin() {
 
-        if(Container.session.loginedMember != null){
-            System.out.println("이미 로그인이 된 상태입니다.");
+        if (Container.session.isLogined()) {
+            System.out.println("로그아웃하고 로그인하세요.");
             return;
         }
+
 
         String loginId;
         String loginPw;
@@ -109,8 +114,8 @@ public class MemberController {
         int MaxCount = 5;
         int tryCount = 0;
 
-        while(true) {
-            if(tryCount >= MaxCount){
+        while (true) {
+            if (tryCount >= MaxCount) {
                 System.out.println("비밀번호가 5회 틀렸습니다. 다시 시도해주세요.");
                 break;
             }
@@ -126,13 +131,25 @@ public class MemberController {
                 continue;
             }
 
-            // 로그인 성공 및 세션에 저장
-            Container.session.loginedMember = member;
-            Container.session.loginedMemberId = member.getId();
+            // 로그인 상태를 세션에 저장
+            Container.session.login(member);
 
             System.out.println(member.getName() + "님 환영합니다.");
             break;
         }
+    }
+
+    public void doLogout() {
+
+        if (Container.session.loginedMember == null) {
+            System.out.println("로그인을 먼저 하세요.");
+            return;
+        }
+
+        Container.session.logout();
+
+        System.out.println("로그아웃 되었습니다.");
+
     }
 }
 
