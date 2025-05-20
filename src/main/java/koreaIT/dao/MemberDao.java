@@ -22,7 +22,7 @@ public class MemberDao {
         sql.append("FROM `member`");
         sql.append("WHERE `loginId` = ?;", loginId);
 
-        return DBUtil.selectRowBooleanValue(conn, sql);
+        return DBUtil.selectRowBooleanValue(Container.conn, sql);
 
     }
 
@@ -37,7 +37,7 @@ public class MemberDao {
         sql.append("`loginPw` = ?,", loginPw);
         sql.append("`name` = ?;", name);
 
-        return DBUtil.insert(conn, sql);
+        return DBUtil.insert(Container.conn, sql);
 
     }
 
@@ -48,7 +48,7 @@ public class MemberDao {
         sql.append("FROM `member`");
         sql.append("WHERE `loginId` = ?;", loginId);
 
-        Map<String, Object> memberMap = DBUtil.selectRow(conn, sql);
+        Map<String, Object> memberMap = DBUtil.selectRow(Container.conn, sql);
 
         return memberMap;
     }

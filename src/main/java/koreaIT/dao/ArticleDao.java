@@ -12,6 +12,7 @@ public class ArticleDao {
     private Connection conn;
 
     public ArticleDao() {
+
         this.conn = Container.conn;
     }
 
@@ -21,7 +22,7 @@ public class ArticleDao {
         sql.append("SELECT * FROM `article`");
         sql.append("ORDER BY `id` DESC ;");
 
-        List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
+        List<Map<String, Object>> articleListMap = DBUtil.selectRows(Container.conn, sql);
 
         return articleListMap;
 
@@ -32,7 +33,7 @@ public class ArticleDao {
         sql.append("FROM `article`");
         sql.append("WHERE `id`= ?", id);
 
-        return DBUtil.selectRow(conn, sql);
+        return DBUtil.selectRow(Container.conn, sql);
     }
 
 
@@ -42,7 +43,7 @@ public class ArticleDao {
         sql.append("DELETE FROM `article`");
         sql.append("WHERE `id`= ?", id);
 
-        DBUtil.delete(conn, sql);
+        DBUtil.delete(Container.conn, sql);
     }
 
     public void doModify(String newTitle, String newBody, int id) {
@@ -57,7 +58,7 @@ public class ArticleDao {
         }
         sql.append("WHERE `id` = ?;", id);
 
-        DBUtil.update(conn, sql);
+        DBUtil.update(Container.conn, sql);
 
     }
 
@@ -70,7 +71,7 @@ public class ArticleDao {
         sql.append("`title` = ?,", title);
         sql.append("`body` = ? ;", body);
 
-        return DBUtil.insert(conn, sql);
+        return DBUtil.insert(Container.conn, sql);
     }
 
 //    public List<Article> getArticleList() {
