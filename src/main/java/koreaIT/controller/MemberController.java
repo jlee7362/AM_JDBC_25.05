@@ -97,27 +97,27 @@ public class MemberController {
         //로그인 아이디 있는 상황
         Member member = memberService.getMemberByLoginId(loginId);
 
-        int toggle = 0;
-        for (int i = 1; i < 6; i++) {
+        int MaxCount = 5;
+        int tryCount = 0;
+
+        while(true) {
+            if(tryCount >= MaxCount){
+                System.out.println("비밀번호가 5회 틀렸습니다. 다시 시도해주세요.");
+                break;
+            }
             System.out.print("로그인 비밀번호 : ");
             loginPw = sc.nextLine();
+
             if (loginPw.length() == 0 || loginPw.contains(" ")) {
-                System.out.printf("비밀번호 똑바로 입력하시오. (%d/5번)\n", i);
+                System.out.printf("비밀번호 똑바로 입력하시오. (%d/5번)\n", ++tryCount);
                 continue;
             }
             if (!loginPw.equals(member.getLoginPw())) {
-                System.out.printf("비밀번호가 일치하지 않습니다. (%d/5번)\n", i);
+                System.out.printf("비밀번호가 일치하지 않습니다. (%d/5번)\n", ++tryCount);
                 continue;
             }
-
-            toggle = 1;
-            break;
-        }
-
-        if (toggle == 1) {
             System.out.println(member.getName() + "님 환영합니다.");
-        } else {
-            System.out.println("비밀번호가 5회 틀렸습니다. 다시 시도해주세요.");
+            break;
         }
     }
 }
