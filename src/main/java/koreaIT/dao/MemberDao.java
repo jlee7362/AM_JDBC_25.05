@@ -1,6 +1,6 @@
 package koreaIT.dao;
 
-import koreaIT.Member;
+import koreaIT.container.Container;
 import util.DBUtil;
 import util.SecSql;
 
@@ -10,8 +10,8 @@ import java.util.Map;
 public class MemberDao {
     private  Connection conn;
 
-    public MemberDao(Connection conn) {
-        this.conn = conn;
+    public MemberDao() {
+        this.conn = Container.conn;
     }
 
     public boolean isLoginJoinable(String loginId) {

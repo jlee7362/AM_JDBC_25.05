@@ -1,6 +1,7 @@
 package koreaIT.controller;
 
 import koreaIT.Article;
+import koreaIT.container.Container;
 import koreaIT.service.ArticleService;
 
 import java.sql.Connection;
@@ -10,9 +11,11 @@ import java.util.Scanner;
 
 public class ArticleController {
     private ArticleService articleService;
+    private Scanner sc;
 
-    public ArticleController(Connection conn) {
-        this.articleService = new ArticleService(conn);
+    public ArticleController() {
+        this.articleService = Container.articleService;
+        this.sc = Container.sc;
     }
 
     public void doDelete(String cmd) {
@@ -70,7 +73,7 @@ public class ArticleController {
         System.out.println("내용 : " + article.getBody());
     }
 
-    public void doModify(String cmd, Scanner sc) {
+    public void doModify(String cmd) {
         int id = 0;
 
         //parsing 시작
@@ -102,7 +105,7 @@ public class ArticleController {
         System.out.printf("%d번 게시글이 업데이트 되었습니다.\n", id);
     }
 
-    public void doWrite(Scanner sc) {
+    public void doWrite() {
         System.out.print("제목 : ");
         String title = sc.nextLine().trim();
         System.out.print("내용 : ");

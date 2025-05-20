@@ -1,6 +1,7 @@
 package koreaIT.service;
 
 import koreaIT.Article;
+import koreaIT.container.Container;
 import koreaIT.dao.ArticleDao;
 
 import java.sql.Connection;
@@ -12,8 +13,20 @@ public class ArticleService {
     private ArticleDao articleDao = null;
     private List<Article> articleList = new ArrayList<>();
 
-    public ArticleService(Connection conn) {
-        this.articleDao = new ArticleDao(conn);
+    public List<Article> getArticles() {
+
+        List<Map<String, Object>> articleListMap = articleDao.getArticles();
+
+        for (Map<String, Object> articleMap : articleListMap) {
+            Article article = new Article(articleMap);
+            articleList.add(article);
+        }
+
+        return articleList;
+    }
+
+    public ArticleService() {
+        this.articleDao= Container.articleDao;
     }
 
     public Map<String, Object> getArticleById(int id) {
@@ -35,15 +48,5 @@ public class ArticleService {
         return articleDao.doWrite(title, body);
     }
 
-    public List<Article> getArticles() {
 
-        List<Map<String, Object>> articleListMap = articleDao.getArticle();
-
-        for (Map<String, Object> articleMap : articleListMap) {
-            Article article = new Article(articleMap);
-            articleList.add(article);
-        }
-
-        return articleList;
-    }
 }

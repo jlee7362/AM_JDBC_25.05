@@ -1,34 +1,21 @@
 package koreaIT.dao;
 
-import koreaIT.Article;
+import koreaIT.container.Container;
 import util.DBUtil;
 import util.SecSql;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ArticleDao {
+    private Connection conn;
 
-    private Connection conn = null;
-    private List<Article> articleList;
-
-    public ArticleDao(Connection conn) {
-        this.conn = conn;
-        this.articleList = new ArrayList<>();
+    public ArticleDao() {
+        this.conn = Container.conn;
     }
 
-    public Map<String, Object> getArticleById(int id) {
-        SecSql sql = new SecSql();
-        sql.append("SELECT * ");
-        sql.append("FROM `article`");
-        sql.append("WHERE `id`= ?", id);
-
-        return DBUtil.selectRow(conn, sql);
-    }
-
-    public List<Map<String, Object>> getArticle() {
+    public List<Map<String, Object>> getArticles() {
 
         SecSql sql = new SecSql();
         sql.append("SELECT * FROM `article`");
@@ -39,6 +26,16 @@ public class ArticleDao {
         return articleListMap;
 
     }
+    public Map<String, Object> getArticleById(int id) {
+        SecSql sql = new SecSql();
+        sql.append("SELECT * ");
+        sql.append("FROM `article`");
+        sql.append("WHERE `id`= ?", id);
+
+        return DBUtil.selectRow(conn, sql);
+    }
+
+
 
     public void doDelete(int id) {
         SecSql sql = new SecSql();
@@ -76,9 +73,9 @@ public class ArticleDao {
         return DBUtil.insert(conn, sql);
     }
 
-    public List<Article> getArticleList() {
-        return articleList;
-    }
+//    public List<Article> getArticleList() {
+//        return articleList();
+//    }
 
 
 }

@@ -18,8 +18,9 @@ public class App {
     public void run() {
 
 
+
         System.out.println("==프로그램 시작==");
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = Container.sc;
 
         while (true) {
             System.out.print("명령어) ");
@@ -37,7 +38,9 @@ public class App {
                 conn = DriverManager.getConnection(url, "root", "");
 //                System.out.println("연결 성공!");
 
-                int actionResult = doAction(conn, sc, cmd);
+//                Container.conn = conn;
+
+                int actionResult = doAction(cmd);
                 if (actionResult == -1) {
                     System.out.println("==프로그램 종료==");
                     sc.close();
@@ -59,9 +62,9 @@ public class App {
     }
 
 
-    private int doAction(Connection conn, Scanner sc, String cmd) {
-        MemberController memberController = new MemberController(conn, sc);
-        ArticleController articleController = new ArticleController(conn);
+    private int doAction(String cmd) {
+        MemberController memberController = Container.memberController;
+        ArticleController articleController = Container.articleController;
 
         if (cmd.equals("exit")) {
             return -1;
@@ -81,10 +84,10 @@ public class App {
             articleController.showDetail(cmd);
 
         } else if (cmd.startsWith("article modify")) {
-            articleController.doModify(cmd, sc);
+            articleController.doModify(cmd);
 
         } else if (cmd.equals("article write")) {
-            articleController.doWrite(sc);
+            articleController.doWrite();
 
         } else if (cmd.equals("article list")) {
             articleController.showList();
