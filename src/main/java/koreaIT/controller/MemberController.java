@@ -1,7 +1,9 @@
 package koreaIT.controller;
 
 import koreaIT.Member;
+import koreaIT.container.Container;
 import koreaIT.service.MemberService;
+import koreaIT.session.Session;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -71,10 +73,16 @@ public class MemberController {
     }
 
     public void doLogin() {
+
+        if(Container.session.loginedMember != null){
+            System.out.println("이미 로그인이 된 상태입니다.");
+            return;
+        }
+
         String loginId;
         String loginPw;
 
-        System.out.println("== 로그인 ==");
+        System.out.println("=== 로그인 ===");
 
         while (true) {
             System.out.print("로그인 아이디 :");
@@ -97,6 +105,7 @@ public class MemberController {
         //로그인 아이디 있는 상황
         Member member = memberService.getMemberByLoginId(loginId);
 
+
         int MaxCount = 5;
         int tryCount = 0;
 
@@ -116,6 +125,11 @@ public class MemberController {
                 System.out.printf("비밀번호가 일치하지 않습니다. (%d/5번)\n", ++tryCount);
                 continue;
             }
+
+            // 로그인 성공 및 세션에 저장
+            Container.session.loginedMember = member;
+            Container.session.loginedMemberId = member.getId();
+
             System.out.println(member.getName() + "님 환영합니다.");
             break;
         }

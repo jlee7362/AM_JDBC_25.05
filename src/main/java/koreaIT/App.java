@@ -1,5 +1,6 @@
 package koreaIT;
 
+import koreaIT.container.Container;
 import koreaIT.controller.ArticleController;
 import koreaIT.controller.MemberController;
 
@@ -10,8 +11,12 @@ import java.util.Scanner;
 
 public class App {
 
+    public App(){
+        Container.init();
+    }
 
     public void run() {
+
 
         System.out.println("==프로그램 시작==");
         Scanner sc = new Scanner(System.in);
