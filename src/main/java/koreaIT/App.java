@@ -38,7 +38,7 @@ public class App {
                 conn = DriverManager.getConnection(url, "root", "");
 //                System.out.println("연결 성공!");
 
-//                Container.conn = conn;
+                Container.conn = conn;
 
                 int actionResult = doAction(cmd);
                 if (actionResult == -1) {
