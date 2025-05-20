@@ -2,8 +2,6 @@ package koreaIT.controller;
 
 import koreaIT.Member;
 import koreaIT.service.MemberService;
-import util.DBUtil;
-import util.SecSql;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -99,9 +97,7 @@ public class MemberController {
         //로그인 아이디 있는 상황
         Member member = memberService.getMemberByLoginId(loginId);
 
-
         int toggle = 0;
-
         for (int i = 1; i < 6; i++) {
             System.out.print("로그인 비밀번호 : ");
             loginPw = sc.nextLine();
@@ -118,25 +114,11 @@ public class MemberController {
             break;
         }
 
-            if(toggle == 1){
-                System.out.println(member.getName() + "님 환영합니다.");
-            }
-            else {
-                System.out.println("비밀번호 5회 틀렸습니다. 다시 시도하세요.");
-            }
+        if (toggle == 1) {
+            System.out.println(member.getName() + "님 환영합니다.");
+        } else {
+            System.out.println("비밀번호가 5회 틀렸습니다. 다시 시도해주세요.");
         }
-
-
-
-
-
-
-//        아이디를 제대로 입력해주세요
-//        000 아이디는 없습니다.
-//        비밀번호를 제대로 입력해주세요.
-//                비밀번호가 틀렸습니ㅏㄷ.
-//        00님 환영합니다.
-
-
     }
+}
 
