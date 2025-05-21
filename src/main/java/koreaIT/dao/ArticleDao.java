@@ -15,10 +15,18 @@ public class ArticleDao {
     public List<Map<String, Object>> getArticles() {
 
         SecSql sql = new SecSql();
-        sql.append("SELECT * FROM `article`");
-        sql.append("ORDER BY `id` DESC ;");
+        sql.append("SELECT *");
+        sql.append("FROM `article` a");
+        sql.append("INNER JOIN `member` m");
+        sql.append("ON a.memberId = m.id");
+        sql.append("ORDER BY a.`id` DESC ;");
 
         List<Map<String, Object>> articleListMap = DBUtil.selectRows(Container.conn, sql);
+
+//        DB에서 어떤 데이터 왔는지 확인
+//        for (Map<String, Object> articleMap : articleListMap){
+//            System.out.println(articleMap.toString());
+//        }
 
         return articleListMap;
 
@@ -26,8 +34,10 @@ public class ArticleDao {
     public Map<String, Object> getArticleById(int id) {
         SecSql sql = new SecSql();
         sql.append("SELECT * ");
-        sql.append("FROM `article`");
-        sql.append("WHERE `id`= ?", id);
+        sql.append("FROM `article` a");
+        sql.append("INNER JOIN `member` m");
+        sql.append("ON a.memberId = m.id");
+        sql.append("WHERE a.`id`= ?", id);
 
         return DBUtil.selectRow(Container.conn, sql);
     }
@@ -69,10 +79,4 @@ public class ArticleDao {
 
         return DBUtil.insert(Container.conn, sql);
     }
-
-//    public List<Article> getArticleList() {
-//        return articleList();
-//    }
-
-
 }
