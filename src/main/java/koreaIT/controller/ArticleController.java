@@ -105,6 +105,7 @@ public class ArticleController {
     }
 
     public void doWrite() {
+
         System.out.print("제목 : ");
         String title = sc.nextLine().trim();
         System.out.print("내용 : ");
@@ -112,6 +113,7 @@ public class ArticleController {
 
         //DB insert 시작
         int id = articleService.doWrite(title, body);
+
 
         //DB insert 끝
         System.out.printf("%d번 게시글이 등록되었습니다.\n", id);

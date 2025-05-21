@@ -75,6 +75,17 @@ INSERT INTO `member` (`regDate`, `loginId`, `loginPw`, `name`)
 SELECT NOW(), UUID(), 'testPw', '아무개'
 FROM `member`;
 
+INSERT INTO `article` (`regDate`, `updateDate`, `title`, `body`)
+SELECT NOW(), NOW(), CONCAT('title', SUBSTR(UUID(),1,8)), CONCAT('body', SUBSTR(UUID(),1,8))
+FROM `article`;
+
+
 # 유니크 인덱스를 loginID 칼럼에 걸기(대량의 정보속에 색인을 넣어서 빠르게 찾는 기능 추가)
 ALTER TABLE `member` ADD UNIQUE INDEX (`loginId`);
 DESCRIBE `member`;
+
+# article과 member의 정보를 memberId를 기준으로 두 테이블을 붙여서 보여줌.
+SELECT *
+FROM `article` a
+INNER JOIN `member` m
+ON a.memberId = m.id;
