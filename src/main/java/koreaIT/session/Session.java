@@ -1,7 +1,6 @@
 package koreaIT.session;
 
-import koreaIT.Member;
-import koreaIT.container.Container;
+import koreaIT.dto.Member;
 
 public class Session {
 
