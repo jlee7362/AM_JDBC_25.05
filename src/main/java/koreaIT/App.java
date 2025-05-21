@@ -11,13 +11,9 @@ import java.util.Scanner;
 
 public class App {
 
-    public App(){
-        Container.init();
-    }
+    public App(){Container.init();}
 
     public void run() {
-
-
 
         System.out.println("==프로그램 시작==");
         Scanner sc = Container.sc;

@@ -5,7 +5,6 @@ import koreaIT.container.Container;
 
 public class Session {
 
-
     public Member loginedMember;
     public int loginedMemberId;
 

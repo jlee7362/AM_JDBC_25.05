@@ -126,7 +126,6 @@ public class ArticleController {
             System.out.println("게시글이 없습니다.\n");
             return;
         }
-
         System.out.println("번호   /   제목");
         System.out.println("=".repeat(30));
 

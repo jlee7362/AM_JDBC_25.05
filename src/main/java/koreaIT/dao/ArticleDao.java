@@ -9,12 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ArticleDao {
-    private Connection conn;
 
-    public ArticleDao() {
-
-        this.conn = Container.conn;
-    }
+    public ArticleDao() {}
 
     public List<Map<String, Object>> getArticles() {
 

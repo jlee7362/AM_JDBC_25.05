@@ -10,9 +10,10 @@ import java.util.Map;
 
 public class ArticleService {
     private ArticleDao articleDao = null;
-    private List<Article> articleList = new ArrayList<>();
+
 
     public List<Article> getArticles() {
+        List<Article> articleList = new ArrayList<>();
 
         List<Map<String, Object>> articleListMap = articleDao.getArticles();
 
