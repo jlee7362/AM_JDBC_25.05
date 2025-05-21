@@ -90,7 +90,7 @@ public class MemberController {
         System.out.println("=== 로그인 ===");
 
         while (true) {
-            System.out.print("로그인 아이디 :");
+            System.out.print("로그인 아이디 : ");
             loginId = sc.nextLine();
 
             if (loginId.length() == 0 || loginId.contains(" ")) {

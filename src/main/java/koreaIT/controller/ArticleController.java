@@ -18,6 +18,7 @@ public class ArticleController {
     }
 
     public void doDelete(String cmd) {
+
         int id = -1;
         //parsing 시작
         try {
@@ -107,6 +108,11 @@ public class ArticleController {
     }
 
     public void doWrite() {
+
+        if(!Container.session.isLogined()){
+            System.out.println("로그인 후 이용하세요.");
+            return;
+        }
 
         System.out.print("제목 : ");
         String title = sc.nextLine().trim();
