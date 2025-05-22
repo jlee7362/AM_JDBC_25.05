@@ -146,9 +146,17 @@ public class ArticleController {
 
     }
 
-    public void showList() {
+    public void showList(String cmd) {
 
-        List<Article> articleList = articleService.getArticles();
+        int page = 0;
+        //parsing 시작
+        try {
+            page = Integer.parseInt(cmd.split(" ")[2]);
+        } catch (Exception e) {
+            System.out.println("정수 입력하세요.\n");
+        }
+
+        List<Article> articleList = articleService.getArticles(page);
 
         if (articleList.isEmpty()) {
             System.out.println("게시글이 없습니다.\n");

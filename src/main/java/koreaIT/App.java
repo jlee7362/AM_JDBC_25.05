@@ -85,8 +85,8 @@ public class App {
         } else if (cmd.equals("article write")) {
             articleController.doWrite();
 
-        } else if (cmd.equals("article list")) {
-            articleController.showList();
+        } else if (cmd.startsWith("article list")) {
+            articleController.showList(cmd);
         } else {
             System.out.println("사용할 수 없는 명령어입니다.");
         }

@@ -10,6 +10,15 @@ CREATE TABLE `article`(
     `body` TEXT NOT NULL
 );
 
+CREATE TABLE `member`(
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `regDate` DATETIME NOT NULL,
+    `updateDate` DATETIME NOT NULL,
+    `loginId` CHAR(30) NOT NULL,
+    `loginPw` CHAR(100) NOT NULL,
+    `name` CHAR(100) NOT NULL
+);
+
 INSERT INTO `article`
 SET `regDate` = NOW(),
     `updateDate` = NOW(),
@@ -32,14 +41,7 @@ SET `regDate` = NOW(),
     `title` = '제목2',
     `body` = '내용2';
 
-CREATE TABLE `member`(
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `regDate` DATETIME NOT NULL,
-    `updateDate` DATETIME NOT NULL,
-    `loginId` CHAR(30) NOT NULL,
-    `loginPw` CHAR(100) NOT NULL,
-    `name` CHAR(100) NOT NULL
-);
+
 DESC `member`;
 
 INSERT INTO `member`
@@ -84,3 +86,11 @@ ON a.memberId = m.id;
 
 SELECT *
 FROM `member`;
+
+
+#랜덤 글 1개씩 생성.
+INSERT INTO `article`
+SET `regDate` = NOW(),
+	`updateDate` = NOW(),
+	`title` = CONCAT('제목', SUBSTR(RAND() * 1000 FROM 1 FOR 2)),
+	`body` = CONCAT('내용', SUBSTR(RAND() * 1000 FROM 1 FOR 2));
