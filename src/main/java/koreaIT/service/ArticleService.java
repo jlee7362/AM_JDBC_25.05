@@ -12,10 +12,10 @@ public class ArticleService {
     private ArticleDao articleDao = null;
 
 
-    public List<Article> getArticles(int page) {
+    public List<Article> getArticles(int page, String searchKeyword) {
         List<Article> articleList = new ArrayList<>();
 
-        List<Map<String, Object>> articleListMap = articleDao.getArticles(page);
+        List<Map<String, Object>> articleListMap = articleDao.getArticles(page, searchKeyword);
 
         for (Map<String, Object> articleMap : articleListMap) {
             Article article = new Article(articleMap);

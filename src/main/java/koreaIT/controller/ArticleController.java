@@ -148,15 +148,21 @@ public class ArticleController {
 
     public void showList(String cmd) {
 
+        String[] cmdBits = cmd.split(" ");
         int page = 0;
+        String searchKeyword = null;
+
         //parsing 시작
         try {
-            page = Integer.parseInt(cmd.split(" ")[2]);
+            page = Integer.parseInt(cmdBits[2]);
         } catch (Exception e) {
             System.out.println("정수 입력하세요.\n");
         }
+        if (cmdBits.length>=4){
+            searchKeyword = cmdBits[3];
+        }
 
-        List<Article> articleList = articleService.getArticles(page);
+        List<Article> articleList = articleService.getArticles(page, searchKeyword);
 
         if (articleList.isEmpty()) {
             System.out.println("게시글이 없습니다.\n");
